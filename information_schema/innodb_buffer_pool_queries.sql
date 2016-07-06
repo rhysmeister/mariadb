@@ -55,7 +55,8 @@ ORDER BY bp.POOL_ID,
 # Buffer pool consumption by database/table
 SELECT NULLIF(SUBSTRING(bp.TABLE_NAME, 1, LOCATE(".", bp.TABLE_NAME) - 1), '') AS db_name, 
 	bp.TABLE_NAME, 
-	(COUNT(*) * 16) / 1024 / 1024 AS buffer_pool_consumption_gb 
+	(COUNT(*) * 16) / 1024 / 1024 AS buffer_pool_consumption_gb,
+	SUM(bp.NUMBER_RECORDS) AS total_number_records # Probably need to distinguish between data & index pages??
 FROM `INNODB_BUFFER_PAGE` bp 
 GROUP BY db_name, 
 	 bp.TABLE_NAME 
