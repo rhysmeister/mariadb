@@ -5,14 +5,14 @@
 # table. This is an attempt to identify the "bad" queries needing attention #
 # work in progress.                                                         #
 #############################################################################
-DROP TABLE IF EXISTS  tmp_exclude_query
+DROP TABLE IF EXISTS  tmp_exclude_query;
 CREATE TABLE tmp_exclude_query
 (
 	query_text VARCHAR(100) PRIMARY KEY
 ) ENGINE=MEMORY;
 INSERT INTO tmp_exclude_query VALUES ('SHOW GLOBAL STATUS');
 
-SET @schema_name = 'mydb';
+SET @schema_name = 'passeport';
 
 SELECT all_digests.DIGEST,
        all_digests.COUNT_STAR,
