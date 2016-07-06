@@ -38,7 +38,7 @@ ORDER BY bp.POOL_ID,
 	 bp.TABLE_NAME, 
 	 buffer_pool_consumption_gb DESC;
 
-# Buffer pool consumption by database/table
+# Buffer pool consumption by pool/database/table
 SELECT bp.POOL_ID, 
 	NULLIF(SUBSTRING(bp.TABLE_NAME, 1, LOCATE(".", bp.TABLE_NAME) - 1), '') AS db_name, 
 	bp.TABLE_NAME, 
@@ -49,6 +49,17 @@ GROUP BY bp.POOL_ID,
 	 bp.TABLE_NAME 
 ORDER BY bp.POOL_ID, 
 	 db_name, 
+	 bp.TABLE_NAME, 
+	 buffer_pool_consumption_gb DESC;
+
+# Buffer pool consumption by database/table
+SELECT NULLIF(SUBSTRING(bp.TABLE_NAME, 1, LOCATE(".", bp.TABLE_NAME) - 1), '') AS db_name, 
+	bp.TABLE_NAME, 
+	(COUNT(*) * 16) / 1024 / 1024 AS buffer_pool_consumption_gb 
+FROM `INNODB_BUFFER_PAGE` bp 
+GROUP BY db_name, 
+	 bp.TABLE_NAME 
+ORDER BY db_name, 
 	 bp.TABLE_NAME, 
 	 buffer_pool_consumption_gb DESC;
 
