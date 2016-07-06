@@ -59,9 +59,7 @@ SELECT NULLIF(SUBSTRING(bp.TABLE_NAME, 1, LOCATE(".", bp.TABLE_NAME) - 1), '') A
 FROM `INNODB_BUFFER_PAGE` bp 
 GROUP BY db_name, 
 	 bp.TABLE_NAME 
-ORDER BY db_name, 
-	 bp.TABLE_NAME, 
-	 buffer_pool_consumption_gb DESC;
+ORDER BY buffer_pool_consumption_gb DESC;
 
 # Buffer pool consumption by index
 SELECT bp.POOL_ID, 
